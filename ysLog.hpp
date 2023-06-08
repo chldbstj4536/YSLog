@@ -7,8 +7,10 @@
 
 namespace YS::Log
 {
-    void log(const std::string_view message, const std::ostream& outStream = std::cout , const std::source_location& location = std::source_location::current())
+    void log(const std::string_view message, std::ostream& outStream = std::cout , const std::source_location& location = std::source_location::current())
     {
-        outStream << std::format("{}\n:filename : {}\nline : {}\n", message, location.file_name(), location.line());
+        #ifdef _DEBUG
+        outStream << std::format("{}\npath : {}\nline : {}\n", message, location.file_name(), location.line());
+        #endif
     }
 }
