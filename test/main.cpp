@@ -1,27 +1,20 @@
 ﻿#include <ysLog.hpp>
-#include <iostream>
+#include <fstream>
 
-class A
+void NewHandler()
 {
-public:
-    A() { YS::Log::log("Create Class A"); }
-    ~A() { YS::Log::log("Destroy Class A"); }
-};
-
-void FuncA()
-{
-    YS::Log::log("This is FuncA!");
-}
-
-void FuncB()
-{
-    FuncA();
-    YS::Log::log("This is FuncB!");
+    std::cout << "NEW HANDLER!!!" << std::endl;
 }
 
 int main()
 {
-    A a;
-    FuncA();
-    FuncB();
+    YS::assert_handler handler;
+    std::ofstream ofs("log.txt");
+    handler = YS::SetAssertHandler(NewHandler);
+
+    YS::Log("Log Message.", ofs);
+    YS::Assert(false, "Assert Message.", ofs);
+    ofs.close();
+    YS::SetAssertHandler(handler);
+    YS::Assert(false, "Assert Message.", ofs);
 }
