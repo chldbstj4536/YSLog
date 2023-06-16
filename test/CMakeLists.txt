@@ -1,15 +1,18 @@
 ﻿cmake_minimum_required(VERSION 3.25)
 
-project(DemoYSLog
-        LANGUAGES CXX)
+project(YSLogTest
+    LANGUAGES CXX)
 
-set(target_name DemoYSEvent)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-file(GLOB_RECURSE sources CONFIGURE_DEPENDS *.cpp)
-add_executable(${target_name} ${sources})
+add_executable(YSLogTest main.cpp)
 
-add_subdirectory(../ ../build/YSLog)
+# ysLog.hpp 파일 포함
+target_include_directories(YSLogTest
+    PUBLIC ./..)
 
+# VS 시작프로젝트 설정
 if (MSVC)
-    set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${target_name})
+    set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT YSLogTest)
 endif()
